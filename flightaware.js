@@ -521,6 +521,42 @@ FlightAware.prototype.Departed = function(query, callback) {
 };
 
 /*
+ * Enroute returns information about flights enroute for a specified airport
+ * and maximum number of flights to be returned. Enroute flights are returned in order
+ * from soonest arriving to latest.
+ *
+ * Times returned are seconds since 1970 (UNIX epoch seconds).
+ *
+ * See also Arrived, Departed, and Scheduled for other airport tracking functionality.
+ *
+ * Parameters:
+ *  query
+ *  {
+ *      airport	    string	    the ICAO airport ID (e.g., KLAX, KSFO, KIAH, KHOU, KJFK,
+ *                              KEWR, KORD, KATL, etc.)
+ *      howMany	    int	        determines the number of results. Must be a positive
+ *                              integer value less than or equal to 15, unless
+ *                              SetMaximumResultSize has been called.
+ *      filter	    string	    can be "ga" to show only general aviation traffic,
+ *                              "airline" to only show airline traffic, or null/empty
+ *                              to show all raffic.
+ *      offset	    int	        must be an integer value of the offset row count you
+ *                              want the search to start at. Most requests should be 0.
+ *  }
+ *  callback        function    async completion callback
+ *
+ * Returns:
+ *  undefined
+ *
+ * Async callback:  callback(err, result)
+ *  err             object      undefined or error information
+ *  result          object      EnrouteStruct
+ */
+FlightAware.prototype.Enroute = function(query, callback) {
+    this._request("Enroute", query, callback)
+};
+
+/*
  * FleetArrived returns information about recently arrived flights belonging to an 
  * aircraft fleet. Only flights that have arrived within the last 24 hours are 
  * considered. Codeshares and alternate idents are NOT considered.  
